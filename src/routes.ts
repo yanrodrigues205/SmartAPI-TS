@@ -3,5 +3,6 @@ import { Router } from "express";
 export const routes = Router();
 
 routes.get("/", (req, res) => {
-    alert("welcome");
+    let start: { welcome: string} = {"welcome": "yan"};
+    res.send(start);
 });

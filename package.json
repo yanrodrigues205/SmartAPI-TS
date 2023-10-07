@@ -4,6 +4,7 @@
   "description": "remaking API based on new knowledge, both typesscript and the use of new tools, such as docker.",
   "main": "index.js",
   "scripts": {
+    "start": "tsnd --exit-child --respawn --transpile-only --files src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/yanrodrigues205/SmartAPI-TS#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2"
   },

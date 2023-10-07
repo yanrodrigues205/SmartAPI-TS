@@ -1,0 +1,22 @@
+version: 3
+
+services:
+  app:
+    build:
+      context: .
+        dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+
+  database:
+    image: mysql:5.7
+    environment:
+        MYSQL_ROOT_PASSWORD: L%f76sK%TS
+        MYSQL_DATABASE: smartapi
+        MYSQL_USER: adm_smart
+        MYSQL_PASSWORD: 8&7$tCtnUy
+    ports:
+      - "3306:3306"
+
