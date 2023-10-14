@@ -51,7 +51,7 @@ class UserController {
     }
 
 
-    public async getUsers(req: Request, res: Response)
+    public async getUsers(res: Response)
     {
         const users = await this.userService.getUsers();
 
