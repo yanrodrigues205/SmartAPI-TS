@@ -33,6 +33,44 @@ class UserService {
         const users = await database.users.findMany();
         return users;
     }
+
+
+    public async getUniqueUser(id_user: string)
+    {
+        try
+        {
+            const user = await database.users.findUnique({
+                where: {
+                    id: id_user
+                },
+                select:
+                {
+                    id: true,
+                    name: true,
+                    email: true,
+                    password: true,
+                    create: true,
+                    updated: true
+                }
+            });
+
+
+            if(!user)
+            {
+                return false;
+            }
+            else
+            {
+                return user;
+            }
+
+
+        }
+        catch(err)
+        {
+            return err;
+        }
+    }
 }
 
 export default UserService;

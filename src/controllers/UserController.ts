@@ -21,7 +21,7 @@ class UserController {
             return res.status(422).json({
                 message: "Add all fields to complete registration!",
                 statusCode: 422
-            })
+            });
         }
 
         const checkIsNotEmail = await database.users.findUnique({
@@ -64,6 +64,32 @@ class UserController {
             return res.status(202).json({
                 message: "There are no registered users in the system!",
                 status_code: 202
+            });
+        }
+    }
+
+
+    public async getUniqueUser(req: Request, res: Response)
+    {
+        const id: string = req.body;
+        const user = await this.userService.getUniqueUser(id);
+
+        if(typeof user === "object")
+        {
+            return res.status(200).json(user);
+        }
+        else if(user == false)
+        {
+            return res.status(202).json({
+                message: "This user id was not found!",
+                status_code: 202
+            });
+        }
+        else
+        {
+            return res.status(402).json({
+                message: "Internal Error -> "+user,
+                status_code: 402
             });
         }
     }
