@@ -6,32 +6,62 @@ class UserService {
 
     public async addUser(user: User)
     {
-        const hashSenha = await hash(user.password, 8);
+        try
+        {
+            const hashPassword = await hash(user.password, 8);
 
-        const create_user = await database.users.create({
-            data: {
-                name: user.name,
-                email: user.email,
-                password: hashSenha
-            },
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                password: true,
-                create: true,
-                updated: true
+            if(hashPassword)
+            {
+                const create_user = await database.users.create({
+                    data: {
+                        name: user.name,
+                        email: user.email,
+                        password: hashPassword
+                    },
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        password: true,
+                        create: true,
+                        updated: true
+                    }
+                });
+
+                if(create_user)
+                {
+                    return create_user;
+                }
             }
-        });
 
-        return create_user;
+            return false;
+        }
+        catch(err)
+        {
+            return err;
+        }
+       
     }
 
 
     public async getUsers()
     {
-        const users = await database.users.findMany();
-        return users;
+        try
+        {
+            const users = await database.users.findMany();
+
+            if(!users)
+            {
+                return false;
+            }
+
+            return users;
+        }
+        catch(err)
+        {
+            return err;
+        }
+        
     }
 
 

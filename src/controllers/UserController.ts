@@ -55,11 +55,11 @@ class UserController {
     {
         const users = await this.userService.getUsers();
 
-        if(typeof users === "object" && users.length > 0)
+        if(typeof users === "object")
         {
             return res.status(200).json(users);
         }
-        else
+        else if(users == false)
         {
             return res.status(202).json({
                 message: "There are no registered users in the system!",
