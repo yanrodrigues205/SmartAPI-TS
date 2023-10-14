@@ -26,6 +26,13 @@ class UserService {
 
         return create_user;
     }
+
+
+    public async getUsers()
+    {
+        const users = await database.users.findMany();
+        return users;
+    }
 }
 
 export default UserService;

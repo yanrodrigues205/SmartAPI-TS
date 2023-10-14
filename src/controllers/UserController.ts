@@ -53,7 +53,19 @@ class UserController {
 
     public async getUsers(req: Request, res: Response)
     {
-        
+        const users = await this.userService.getUsers();
+
+        if(typeof users === "object" && users.length > 0)
+        {
+            return res.status(200).json(users);
+        }
+        else
+        {
+            return res.status(202).json({
+                message: "There are no registered users in the system!",
+                status_code: 202
+            });
+        }
     }
 }
 
