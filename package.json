@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsnd --exit-child --respawn --transpile-only --files src/server.ts",
+    "database": "npx prisma migrate dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
