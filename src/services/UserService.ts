@@ -4,10 +4,29 @@ import { database } from "./database";
 
 class UserService {
 
-    public async addUser(user: User)
+
+    private async verifyEmail_S(user: User)
+    {
+        const checkIsNotEmail = await database.users.findUnique({
+            where: {
+                email: user.email
+            }
+        })
+
+
+        return checkIsNotEmail;
+    }
+
+    protected async addUser_S(user: User)
     {
         try
         {
+            const verify = await this.verifyEmail_S(user);
+            if(verify)
+            {
+                return false;
+            }
+
             const hashPassword = await hash(user.password, 8);
 
             if(hashPassword)
@@ -34,7 +53,7 @@ class UserService {
                 }
             }
 
-            return false;
+            return undefined;
         }
         catch(err)
         {
@@ -44,7 +63,7 @@ class UserService {
     }
 
 
-    public async getUsers()
+    protected async getUsers_S()
     {
         try
         {
@@ -65,7 +84,7 @@ class UserService {
     }
 
 
-    public async getUniqueUser(id_user: string)
+    protected async getUniqueUser_S(id_user: string)
     {
         try
         {

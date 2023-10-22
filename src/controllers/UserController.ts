@@ -3,15 +3,10 @@ import UserService from "../services/UserService";
 import User from "../models/User";
 import { database } from "../services/database";
 
-class UserController {
 
-    private userService: UserService;
+class UserController extends UserService{
 
-    constructor()
-    {
-        this.userService = new UserService();
-    }
-
+ 
     public async addUser(req: Request, res: Response)
     {
         const user_req: User = req.body;
@@ -24,26 +19,24 @@ class UserController {
             });
         }
 
-        const checkIsNotEmail = await database.users.findUnique({
-            where: {
-                email: user_req.email
-            }
-        })
+     
 
-        if(checkIsNotEmail)
+        const user_obj =  this.addUser_S(user_req);
+
+        
+        if(await user_obj == false)
         {
-            return res.status(202).json({
-                message: "This email is already in the system!",
-                statusCode: 202
+            return res.status(422).json({
+                message: "This email already exists within the system!",
+                statusCode: 422
             });
         }
 
-        const user_obj = this.userService.addUser(user_req);
-
+        
         if(typeof user_obj === "object")
         {
             return res.status(200).json({
-                message: "User registeref successfully!",
+                message: "User registered successfully!",
                 statusCode: 200
             });
         }
@@ -53,7 +46,7 @@ class UserController {
 
     public async getUsers(res: Response)
     {
-        const users = await this.userService.getUsers();
+        const users = await this.getUsers_S();
 
         if(typeof users === "object")
         {
@@ -72,7 +65,7 @@ class UserController {
     public async getUniqueUser(req: Request, res: Response)
     {
         const id: string = req.body;
-        const user = await this.userService.getUniqueUser(id);
+        const user = await this.getUniqueUser_S(id);
 
         if(typeof user === "object")
         {
