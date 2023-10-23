@@ -22,7 +22,7 @@ class AcessService
         
     }
 
-    protected async addAcess(acess: Acess)
+    protected async addAcess_S(acess: Acess)
     {
         try
         {
@@ -52,5 +52,54 @@ class AcessService
             return err;
         }
     }
-    
+
+
+    protected async getAcess_S()
+    {
+        try
+        {
+            const acess = await database.acess.findMany();
+
+            if(!acess)
+            {
+                return false;
+            }
+
+            return acess;
+        }
+        catch(err)
+        {
+            return err;
+        }
+    }
+
+    protected async getUniqueAcess_S(id_acess: string)
+    {
+        try
+        {
+            const acess = await database.acess.findMany({
+                where:{
+                    id: id_acess
+                },
+                select:{
+                    id: true,
+                    title: true,
+                    description: true,
+                    create: true,
+                    update: true
+                }
+            });
+
+            if(!acess)
+            {
+                return false;
+            }
+
+            return acess;
+        }
+        catch(err)
+        {
+            return err;
+        }
+    }
 }
